@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumar Abhishek - Resume Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #7c3aed;
+            --accent-color: #06b6d4;
+            --light-bg: #f8fafc;
+            --dark-text: #1e293b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* HEADER SECTION */
+        .header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 30px;
+            padding: 25px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 0;
+        }
+        
+        .info-item span a {
+            color:#b2d738;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .info-item span a:hover {
+            color: #d1d1d1;
+            border-bottom: 1px solid #ffffff;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 12px;
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            border-left: 2px solid var(--accent-color);
+            font-size: 12px;
+        }
+
+        .info-item label {
+            display: none;
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 12px;
+            opacity: 1;
+        }
+
+        .header-right {
+            position: relative;
+        }
+
+        .profile-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 5px;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            left: 790px;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* MAIN CONTENT AREA */
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            background: var(--light-bg);
+            border-right: 2px solid var(--border-color);
+            padding: 30px 0;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .nav-section-title {
+            padding: 10px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        /* Hide radio buttons */
+        .tab-input {
+            display: none;
+        }
+
+        /* Style labels as buttons */
+        .tab-label {
+            display: block;
+            width: calc(100% - 20px);
+            margin: 8px 10px;
+            padding: 14px 16px;
+            border: none;
+            background: white;
+            color: var(--dark-text);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: left;
+            border-radius: 6px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .tab-label:hover {
+            background: var(--hover-bg);
+            border-left-color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        /* Active tab label */
+        .tab-input:checked + .tab-label {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-left-color: var(--accent-color);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            padding: 40px;
+            overflow-y: auto;
+            background: white;
+            position: relative;
+        }
+
+        /* Hide all tab content by default */
+        .tab-content {
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        /* Show the tab content when its radio button is checked */
+        #tab-objective:checked ~ .content-area #content-objective,
+        #tab-education:checked ~ .content-area #content-education,
+        #tab-skills:checked ~ .content-area #content-skills,
+        #tab-achievements:checked ~ .content-area #content-achievements,
+        #tab-certificates:checked ~ .content-area #content-certificates,
+        #tab-awards:checked ~ .content-area #content-awards,
+        #tab-contact:checked ~ .content-area #content-contact {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CONTENT STYLES */
+        .frame {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+        }
+
+        .frame h2 {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .frame h3 {
+            color: var(--secondary-color);
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .frame h4 {
+            color: var(--accent-color);
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .frame p {
+            line-height: 1.8;
+            margin-bottom: 12px;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .frame ul, .frame ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .frame li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .skill-group {
+            margin-bottom: 20px;
+        }
+
+        .skill-category {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        .achievement-card {
+            background: var(--light-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            background: #f1e7ff;
+            transform: translateX(5px);
+        }
+
+        .achievement-card h5 {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .achievement-card p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .cert-item {
+            background: white;
+            border: 2px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .cert-item h5 {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cert-item .percentage {
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 25px 0;
+        }
+
+        /* SCROLLBAR STYLING */
+        .sidebar::-webkit-scrollbar,
+        .content-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track,
+        .content-area::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb,
+        .content-area::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover,
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+                padding: 20px;
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .nav-section {
+                flex-shrink: 0;
+            }
+
+            .header {
+                grid-template-columns: auto 1fr auto;
+                gap: 20px;
+            }
+
+            .header-left h1 {
+                font-size: 28px;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .header-right {
+                order: -1;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .header-left h1 {
+                font-size: 24px;
+            }
+            
+            .header-info {
+                grid-template-columns: 1fr;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .frame {
+                padding: 20px;
+            }
+
+            .frame h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER SECTION -->
+        <div class="header">
+            <div class="header-left">
+                <h1>KUMAR ABHISHEK</h1>
+                <div class="header-info">
+                    <div class="info-item">
+                        <label>Gender</label>
+                        <span>Male</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Date of Birth</label>
+                        <span>27th March 2005</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Phone</label>
+                        <span>+91 8409843414</span>
+                    </div>
+                    <div class="info-item">
+                        <label>LinkedIn</label>
+                        <span>
+                            <a href="https://www.linkedin.com/in/kumar-abhishek-62573029a/"target="_blank">
+                                LinkedIn Profile
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+
+<div class="profile-photo">
+    <img 
+        src="photo.png"
+        alt="profile"
+    />
+</div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT - Using radio buttons for tab switching -->
+        <div class="main-wrapper">
+            <!-- Radio buttons for tabs (hidden) -->
+            <input type="radio" name="tabs" id="tab-objective" class="tab-input" checked>
+            <input type="radio" name="tabs" id="tab-education" class="tab-input">
+            <input type="radio" name="tabs" id="tab-skills" class="tab-input">
+            <input type="radio" name="tabs" id="tab-achievements" class="tab-input">
+            <input type="radio" name="tabs" id="tab-certificates" class="tab-input">
+            <input type="radio" name="tabs" id="tab-awards" class="tab-input">
+            <input type="radio" name="tabs" id="tab-contact" class="tab-input">
+            
+            <!-- SIDEBAR NAVIGATION -->
+            <div class="sidebar">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <label for="tab-objective" class="tab-label">📋 Objective</label>
+                    <label for="tab-education" class="tab-label">🎓 Education</label>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Professional</div>
+                    <label for="tab-skills" class="tab-label">💻 Skills</label>
+                    <label for="tab-achievements" class="tab-label">🏆 Achievements</label>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Credentials</div>
+                    <label for="tab-certificates" class="tab-label">📜 Certificates</label>
+                    <label for="tab-awards" class="tab-label">⭐ Awards</label>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Contact</div>
+                    <label for="tab-contact" class="tab-label">📧 Contact</label>
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content-area">
+                <!-- OBJECTIVE -->
+                <div id="content-objective" class="tab-content">
+                    <div class="frame">
+                        <h2>Professional Objective</h2>
+                        <p style="font-size: 15px; line-height: 1.8; color: #1e293b;">
+                            Highly motivated and skilled Second year Computer Science and Engineering student specializing in Artificial Intelligence and Robotics at VIT Chennai, seeking opportunities to apply strong programming foundations, data structures and algorithms expertise, and problem solving abilities to innovative projects and challenges.
+                        </p>
+                        <p style="font-size: 15px; line-height: 1.8; color: #1e293b;">
+                            Passionate about contributing to cutting edge technology and continuously expanding knowledge in AI/ML domains.
+                        </p>
+                        <div class="divider"></div>
+                        <h3>Quick Facts</h3>
+                        <ul>
+                            <li><strong>Current Role:</strong> Second Year Student at VIT Chennai</li>
+                            <li><strong>Specialization:</strong> Artificial Intelligence and Robotics</li>
+                            <li><strong>Overall CGPA:</strong> 8.55/10.0</li>
+                            <li><strong>Coding Subjects CGPA:</strong> 10.0/10.0 (Python, C, C++, Java, DSA)</li>
+                            <li><strong>Problem Solving:</strong> 600+ LeetCode Problems Solved</li>
+                            <li><strong>Location:</strong> Chennai, India</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- EDUCATION -->
+                <div id="content-education" class="tab-content">
+                    <div class="frame">
+                        <h2>Education</h2>
+                        <h3>Vellore Institute of Technology (VIT), Chennai</h3>
+                        <h4>B.Tech in Computer Science and Engineering</h4>
+                        <p><strong>Specialization:</strong> Artificial Intelligence and Robotics</p>
+                        <p><strong>Current Status:</strong> Second Year (Pursuing)</p>
+                        <div style="background: linear-gradient(135deg, #f0f4f8, #e0e7ff); padding: 20px; border-radius: 8px; margin: 15px 0;">
+                            <h5 style="color: var(--primary-color); margin-bottom: 10px;">Academic Performance</h5>
+                            <p style="margin: 5px 0;"><strong>Overall CGPA:</strong> 8.55/10.0</p>
+                            <p style="margin: 5px 0;"><strong>Coding Subjects CGPA:</strong> 10.0/10.0</p>
+                            <p style="margin: 5px 0;"><strong>Core Subjects:</strong> Python, C, C++, Java, DSA Lab</p>
+                        </div>
+                        <div class="divider"></div>
+                        <h3>Coursework & Specialization</h3>
+                        <ul>
+                            <li>Data Structures and Algorithms</li>
+                            <li>Artificial Intelligence Fundamentals</li>
+                            <li>Robotics and Automation</li>
+                            <li>Database Management Systems</li>
+                            <li>Web Development Fundamentals</li>
+                            <li>Object-Oriented Programming</li>
+                            <li>Discrete Mathematics</li>
+                            <li>Operating Systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SKILLS -->
+                <div id="content-skills" class="tab-content">
+                    <div class="frame">
+                        <h2>Technical Skills</h2>
+                        
+                        <div class="skill-group">
+                            <div class="skill-category">Programming Languages</div>
+                            <div class="skill-items">
+                                <span class="skill-tag">Python (Proficient)</span>
+                                <span class="skill-tag">C (Proficient)</span>
+                                <span class="skill-tag">C++ (Proficient)</span>
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Assembly (8051, 8086)</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <div class="skill-category">Frontend Development</div>
+                            <div class="skill-items">
+                                <span class="skill-tag">HTML</span>
+                                <span class="skill-tag">CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <div class="skill-category">Backend Development</div>
+                            <div class="skill-items">
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">FastAPI</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <div class="skill-category">Core Expertise</div>
+                            <div class="skill-items">
+                                <span class="skill-tag">Data Structures & Algorithms</span>
+                                <span class="skill-tag">Advanced Problem Solving</span>
+                                <span class="skill-tag">Competitive Programming</span>
+                                <span class="skill-tag">AI/ML Fundamentals</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <div class="skill-category">Tools & Platforms</div>
+                            <div class="skill-items">
+                                <span class="skill-tag">LeetCode</span>
+                                <span class="skill-tag">GeeksforGeeks</span>
+                                <span class="skill-tag">VS Code</span>
+                                <span class="skill-tag">Git</span>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+                        <h3>Languages</h3>
+                        <ul>
+                            <li><strong>English</strong> - Fluent (Professional)</li>
+                            <li><strong>Hindi</strong> - Native Speaker</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ACHIEVEMENTS -->
+                <div id="content-achievements" class="tab-content">
+                    <div class="frame">
+                        <h2>Achievements & Accomplishments</h2>
+                        
+                        <h3>Competitive Programming & Problem Solving</h3>
+                        <div class="achievement-card">
+                            <h5>600+ LeetCode Problems Solved</h5>
+                            <p>Demonstrating strong aptitude in Data Structures and Algorithms with efficient problem-solving strategies and consistent improvement in competitive programming rankings.</p>
+                        </div>
+
+                        <h3>Hackathons & Competitions</h3>
+                        <div class="achievement-card">
+                            <h5>🏆 I AM NEO Hackathon - Top 10 Position</h5>
+                            <p>Secured a Top 10 position among participants from all four academic years, showcasing exceptional proficiency in Data Structures and Algorithms.</p>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h5>🏆 5th Rank in CodeRush Coding Contest</h5>
+                            <p>Achieved 5th rank in a DSA-based coding competition, demonstrating advanced problem-solving and algorithmic thinking capabilities.</p>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h5>🎯 GlitchCon Hackathon Participant</h5>
+                            <p>Actively participated in this inter-company hackathon, contributing to innovative solutions and receiving appreciation from industry professionals for collaborative spirit and technical contributions.</p>
+                        </div>
+
+                        <h3>Workshops & Training</h3>
+                        <div class="achievement-card">
+                            <h5>Ardurobotics Workshop - IIT Varanasi</h5>
+                            <p>Completed advanced robotics workshop focusing on Arduino programming and embedded systems design.</p>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h5>DroneMania - VIT Chennai</h5>
+                            <p>Participated in drone programming and autonomous systems competition organized by VIT Chennai.</p>
+                        </div>
+
+                        <h3>Key Highlights</h3>
+                        <ul>
+                            <li>Engaged in multiple hackathons gaining practical experience in rapid prototyping and collaborative development</li>
+                            <li>Consistent excellence in coding competitions and DSA-focused contests</li>
+                            <li>Strong problem-solving mindset demonstrated through competitive programming journey</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CERTIFICATES -->
+                <div id="content-certificates" class="tab-content">
+                    <div class="frame">
+                        <h2>Certificates & Certifications</h2>
+                        
+                        <h3>IIT Bombay - Spoken Tutorial Project (MHRD Funded)</h3>
+                        
+                        <div class="cert-item">
+                            <h5>✓ Python Programming</h5>
+                            <p>Achieved excellence in Python programming fundamentals and advanced concepts.</p>
+                            <div class="percentage">80% Score</div>
+                        </div>
+
+                        <div class="cert-item">
+                            <h5>✓ C Programming</h5>
+                            <p>Certified in Core C programming with strong understanding of pointers, memory management, and system-level programming.</p>
+                            <div class="percentage">92% Score</div>
+                        </div>
+
+                        <div class="cert-item">
+                            <h5>✓ C++ Programming</h5>
+                            <p>Proficient in Object-Oriented Programming concepts with C++ including classes, inheritance, polymorphism, and STL.</p>
+                            <div class="percentage">92% Score</div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <h3>Deloitte Australia Data Analytics Job Simulation</h3>
+                        <div class="cert-item">
+                            <h5>✓ Certificate of Completion</h5>
+                            <p>Successfully completed comprehensive data analytics job simulation covering real-world analytics scenarios and business intelligence applications.</p>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <h3>Hackathon Certificates</h3>
+                        <div class="cert-item">
+                            <h5>✓ I AM NEO Hackathon Certificate</h5>
+                            <p>Awarded for outstanding performance and exceptional proficiency in Data Structures and Algorithms in a highly competitive environment.</p>
+                        </div>
+
+                        <div class="cert-item">
+                            <h5>✓ GlitchCon Hackathon Certificate</h5>
+                            <p>Received appreciation from industry professionals for collaborative spirit and technical contributions in inter-company hackathon.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AWARDS -->
+                <div id="content-awards" class="tab-content">
+                    <div class="frame">
+                        <h2>Awards & Recognitions</h2>
+                        
+                        <h3>Data Structures & Algorithms Proficiency</h3>
+                        <div class="achievement-card">
+                            <h5>⭐ LeetCode Problem Solver - 600+ Problems</h5>
+                            <p>Demonstrated exceptional proficiency in solving complex algorithmic problems across multiple difficulty levels, maintaining consistency and problem-solving excellence.</p>
+                        </div>
+
+                        <h3>Hackathon Recognition</h3>
+                        <div class="achievement-card">
+                            <h5>⭐ I AM NEO Hackathon - Top 10 Achiever</h5>
+                            <p>Secured prestigious Top 10 position among participants from all four academic years. Awarded certificate for outstanding performance in highly competitive environment with focus on DSA-based challenges.</p>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h5>⭐ GlitchCon Hackathon - Industry Recognition</h5>
+                            <p>Received appreciation from industry professionals at this inter-company hackathon event, recognized for collaborative spirit, innovative thinking, and technical contributions.</p>
+                        </div>
+
+                        <h3>Academic Excellence</h3>
+                        <div class="achievement-card">
+                            <h5>⭐ Perfect Score in Coding Subjects</h5>
+                            <p>Achieved perfect 10.0/10.0 CGPA in all coding-related subjects including Python, C, C++, Java, and DSA Laboratory.</p>
+                        </div>
+
+                        <h3>Certification Awards</h3>
+                        <div class="achievement-card">
+                            <h5>⭐ IIT Bombay Spoken Tutorial Awardee</h5>
+                            <p>Recognized by IIT Bombay under MHRD Government of India program with certifications in C (92%), C++ (92%), and Python (80%) programming languages.</p>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h5>⭐ Deloitte Australia Certification</h5>
+                            <p>Successfully completed and certified in Deloitte Australia Data Analytics Job Simulation, demonstrating real-world data analysis and business intelligence capabilities.</p>
+                        </div>
+
+                        <h3>Competition Rankings</h3>
+                        <div class="achievement-card">
+                            <h5>⭐ CodeRush DSA Contest - 5th Rank</h5>
+                            <p>Achieved 5th position in DSA-based coding contest among numerous competitors, demonstrating algorithmic excellence and problem-solving speed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT -->
+                <div id="content-contact" class="tab-content">
+                    <div class="frame">
+                        <h2>Contact Information</h2>
+                        
+                        <div style="background: linear-gradient(135deg, #f0f4f8, #e0e7ff); padding: 25px; border-radius: 8px; margin: 20px 0;">
+                            <h3 style="color: var(--primary-color); margin-top: 0;">Get In Touch</h3>
+                            
+                            <div style="margin: 20px 0;">
+                                <p style="font-weight: 600; color: var(--dark-text); margin-bottom: 5px;">📧 Email</p>
+                                <p style="margin: 0; color: #1e40af; font-size: 15px;">kabhishek76673@gmail.com</p>
+                            </div>
+
+                            <div style="margin: 20px 0;">
+                                <p style="font-weight: 600; color: var(--dark-text); margin-bottom: 5px;">📱 Phone</p>
+                                <p style="margin: 0; color: #1e40af; font-size: 15px;">+91 8409843414</p>
+                            </div>
+
+                            <div style="margin: 20px 0;">
+                                <p style="font-weight: 600; color: var(--dark-text); margin-bottom: 5px;">📍 Location</p>
+                                <p style="margin: 0; color: #1e40af; font-size: 15px;">Chennai, India</p>
+                            </div>
+
+                            <div style="margin: 20px 0;">
+    <p style="font-weight: 600; color: var(--dark-text); margin-bottom: 5px;">💻 LinkedIn</p>
+    <p style="margin: 0; font-size: 15px;">
+        <a href="https://www.linkedin.com/in/kumar-abhishek-62573029a/" target="_blank" style="color: #d738bd; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">
+            LinkedIn Profile
+        </a>
+    </p>
+
+<div style="margin: 20px 0;">
+    <p style="font-weight: 600; color: var(--dark-text); margin-bottom: 5px;">💻 LeetCode</p>
+    <p style="margin: 0; font-size: 15px;">
+        <a href="https://leetcode.com/u/kumarabhishek1235" target="_blank" style="color: #d738bd; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">
+            LeetCode Profile
+        </a>
+    </p>
+</div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <h3>Connect With Me</h3>
+                        <p>I'm actively looking for opportunities to contribute to innovative projects in AI, Robotics, and Software Development. Feel free to reach out for:</p>
+                        <ul>
+                            <li>Internship and Full-time Position Opportunities</li>
+                            <li>Collaborative Projects and Hackathons</li>
+                            <li>Technical Discussions and Mentorship</li>
+                            <li>Networking and Professional Growth</li>
+                        </ul>
+
+                        <div class="divider"></div>
+
+                        <h3>Professional Links</h3>
+                        <p style="margin-bottom: 15px;">Check out my work and achievements on these platforms:</p>
+                        <ul>
+                            <li><strong>LinkedIn:</strong> For professional profile and networking</li>
+                            <li><strong>LeetCode:</strong> For coding problems and competitive programming progress</li>
+                            <li><strong>GeeksforGeeks:</strong> For coding tutorials and problem-solving contributions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
